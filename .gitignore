@@ -1,0 +1,6 @@
+*.class
+.classpath
+.idea
+target
+build/
+githash/
