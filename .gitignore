@@ -1,6 +1,7 @@
 *.class
 .classpath
 .idea
+.gradle
 target
 build/
 githash/

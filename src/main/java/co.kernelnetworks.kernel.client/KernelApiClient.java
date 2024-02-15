@@ -8,6 +8,7 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.Set;
+import javax.security.auth.login.AccountNotFoundException;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
@@ -15,9 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
+import org.json.JSONException;
 import org.json.JSONObject;
-
-import javax.naming.AuthenticationException;
 
 class KernelApiClient {
 
@@ -28,41 +28,13 @@ class KernelApiClient {
     }
 
     static class FilterObject {
-        Timestamp startDate;		   // earliest “Interaction Date”
-        Timestamp endDate;  		   // latest “Interaction Date”
-        Set<String> contactReputations;   // contact recognition level
-        Set<String> contactRoles;	   // contact primary roles
-        Set<String> institutionTypes;	   // institution types
-        Set<String> provinces;   		   // province codes
-        Set<String> countries;    		   // country codes
-
-        public Timestamp getStartDate() {
-            return startDate;
-        }
-
-        public Timestamp getEndDate() {
-            return endDate;
-        }
-
-        public Set<String> getContactReputations() {
-            return contactReputations;
-        }
-
-        public Set<String> getContactRoles() {
-            return contactRoles;
-        }
-
-        public Set<String> getInstitutionTypes() {
-            return institutionTypes;
-        }
-
-        public Set<String> getProvinces() {
-            return provinces;
-        }
-
-        public Set<String> getCountries() {
-            return countries;
-        }
+        public Timestamp startDate;		   // earliest “Interaction Date”
+        public Timestamp endDate;  		   // latest “Interaction Date”
+        public Set<String> contactReputations;   // contact recognition level
+        public Set<String> contactRoles;	   // contact primary roles
+        public Set<String> institutionTypes;	   // institution types
+        public Set<String> provinces;   		   // province codes
+        public Set<String> countries;    		   // country codes
     }
 
     protected static ObjectMapper getJsonMapper() {
@@ -91,10 +63,15 @@ class KernelApiClient {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         if (response.statusCode() == 201) {
-            JSONObject auth = new JSONObject(response.body());
-            String token = auth.optString("authorization", null);
+            String token = null;
+            try {
+                JSONObject authorizationObject = new JSONObject(response.body());
+                token = authorizationObject.getString("authorization");
+            } catch (JSONException e) {
+                System.out.println(e.getMessage());
+            }
             if (token == null)
-                throw new AuthenticationException("No authentication string returned");
+                throw new AccountNotFoundException("No authentication string returned: bad credentials");
             FilterObject fobject = new FilterObject();
             fobject.startDate = Timestamp.valueOf("2020-08-10 07:00:00.000");
             fobject.endDate = Timestamp.valueOf("2020-11-11 07:00:00.000");
