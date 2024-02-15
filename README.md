@@ -1,32 +1,31 @@
 **Kernel Flat file extract REST API documentation**
 
-Prepared for: Springworks | February 2024
 
 **Overview:**
 
-Pending Springworks approval and SoW, Kernel will enable REST API access to all data for Springworks's Kernel instance. The REST API may be used by Springworks to pull all existing interactions, surveys, and insights data. The data pull is secure (e.g. authenticated system user account over https connection) so that only Springworks's approved systems have access. We will also provide and update this document explaining the data input and outputs through the exposed API functions.
+Kernel can enable REST API access to all data for its customers. The REST API may be used to pull all existing interactions, surveys, and insights data. The data pull is secure (e.g. authenticated system user account over https connection) so that only customer's approved systems have access. We will also provide and update this document explaining the data input and outputs through the exposed API functions.
 
-To use the Kernel REST APIs, **Springworks will need to build a REST API client.** This API client will first need to make a call to fetch a valid auth token. Then make all subsequent calls using that valid auth token to retrieve the requested data via the flat file csv extract endpoint. Lastly, Springworks will need to open the csv file and import its contents into the storage system of your choice. The columns in the csv export can be configured for inclusion/exclusion per Springworks's requirements, by default Kernel returns all available columns. In addition, these columns are not expected to change (order or names) as you continue to use the Kernel Flat file extract API.
+To use the Kernel REST APIs, **customers will need to build a REST API client.** This API client will first need to make a call to fetch a valid auth token. Then make all subsequent calls using that valid auth token to retrieve the requested data via the flat file csv extract endpoint. Lastly, customers will need to open the csv file and import its contents into the storage system of your choice. The columns in the csv export can be configured for inclusion/exclusion per customer's requirements, by default Kernel returns all available columns. In addition, these columns are not expected to change (order or names) as you continue to use the Kernel Flat file extract API.
 
-The same flat file CSV extract can be downloaded from the Kernel UI at this page: [https://Springworkstx.gokernel.com/report/csvExport](https://springworkstx.gokernel.com/report/csvExport). Kernel users can freely export the data in Kernel at any time, but are limited to exporting data their user has visibility to in Kernel which is based on their user role and team assignments.
+The same flat file CSV extract can be downloaded from the Kernel UI at this page: [https://<customer>.gokernel.com/report/csvExport](https://<customer>.gokernel.com/report/csvExport). Kernel users can freely export the data in Kernel at any time, but are limited to exporting data their user has visibility to in Kernel which is based on their user role and team assignments.
 
 **System access:**
 
-- Kernel system API user email: [springworks-api@gokernel.com](mailto:springworks-api@gokernel.com)
+- Kernel system API user email: [<customer>-api@gokernel.com](mailto:<customer>-api@gokernel.com)
 - Password: *TBD*
 
-Springworks's systems will call the authorization function with this user's credentials to securely authenticate to Kernel for access to Springworks's survey/insights data.
+Customer systems will call the authorization function with this user's credentials to securely authenticate to Kernel for access to customer's survey/insights data.
 
 **API changes/updates:**
 
-- The email list "[springworks-api@gokernel.com](mailto:springworks-api@gokernel.com)" will be created to inform Springworks employees of changes to the integration or APIs that may impact their dashboard/data warehouse integration.
+- The email list "[<customer>-api@gokernel.com](mailto:<customer>-api@gokernel.com)" will be created to inform customer employees of changes to the integration or APIs that may impact their dashboard/data warehouse integration.
 - The members of this email list are: **TBD**
 
 **API Overview**
 
 The Kernel APIs are accessed from a set of REST calls at this base address:
 
-[https://springworkstx.gokernel.com/kernelAPI/v2](https://springworkstx.gokernel.com/kernelAPI/v2)/ and by postpending the specific endpoint to be called to the base URL. Your API client will need to successfully make the calls below to retrieve the csv file.
+[https://<customer>.gokernel.com/kernelAPI/v2](https://<customer>.gokernel.com/kernelAPI/v2)/ and by postpending the specific endpoint to be called to the base URL. Your API client will need to successfully make the calls below to retrieve the csv file.
 
 **High-level call flow:**
 
@@ -85,7 +84,7 @@ Boolean expired;
 
 Example request:
 
-curl -X POSThttps://springworkstx.gokernel.com/kernelAPI/v2/user/authorize --data 'email=springworks-api@gokernel.com' --data 'password=TBD'
+curl -X POST https://<customer>.gokernel.com/kernelAPI/v2/user/authorize --data 'email=<customer>-api@gokernel.com' --data 'password=TBD'
 
 Example response:
 
@@ -148,14 +147,14 @@ java.util.Set\<String\> countries; // country codes
 
 Example:
 
-_curl -X POST__"[https://springworkstx.gokernel.com/kernelAPI/v2/storage/topicExportAsCSV](https://springworkstx.gokernel.com/kernelAPI/v2/storage/topicExportAsCSV)?types=Insights&types=InitiativeResponses" --header 'Content-Type: application/json' --header 'Authorization: de4f1237-1944-4274-a1e6-67c2bdc451ad' -d '{_"startDate":"2020-08-10T07:00:00.000Z","endDate":"2020-11-11T07:59:59.999Z"_}'_
+_curl -X POST__"[https://<customer>.gokernel.com/kernelAPI/v2/storage/topicExportAsCSV](https://<customer>.gokernel.com/kernelAPI/v2/storage/topicExportAsCSV)?types=Insights&types=InitiativeResponses" --header 'Content-Type: application/json' --header 'Authorization: de4f1237-1944-4274-a1e6-67c2bdc451ad' -d '{_"startDate":"2020-08-10T07:00:00.000Z","endDate":"2020-11-11T07:59:59.999Z"_}'_
 
 In the above example, to constrain the report by specific dates we specified start and end dates for all interactions that should be contained in the response report.
 
 **Notes:**
 
 - If this API endpoint is called by a user with access below Site Admin, then the output will be restricted to only the teams that they are a member of.
- Note: [springworks-api@gokernel.com](mailto:springworks-api@gokernel.com) user is a member of all teams.
+ Note: [<customer>-api@gokernel.com](mailto:<customer>-api@gokernel.com) user is a member of all teams.
 - Some column names and values may vary depending on the customer's configuration. Some columns may be removed and additional columns of data may be added to the export upon request and Kernel engineering team's review.
 
 **Report Data Descriptions:**
