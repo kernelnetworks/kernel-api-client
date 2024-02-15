@@ -3,6 +3,8 @@
 
 **Overview:**
 
+Kernel is a leader in field medical intelligence. Our platform enables seamless MSL insights and structured surveys data colllection and analysis. Learn more at https://gokernel.com. To see what HCPs are saying about your brand on social media visit https://my.medical.watch.
+
 Kernel can enable REST API access to all data for its customers. The REST API may be used to pull all existing interactions, surveys, and insights data. The data pull is secure (e.g. authenticated system user account over https connection) so that only customer's approved systems have access. We will also provide and update this document explaining the data input and outputs through the exposed API functions.
 
 To use the Kernel REST APIs, **customers will need to build a REST API client.** This API client will first need to make a call to fetch a valid auth token. Then make all subsequent calls using that valid auth token to retrieve the requested data via the flat file csv extract endpoint. Lastly, customers will need to open the csv file and import its contents into the storage system of your choice. The columns in the csv export can be configured for inclusion/exclusion per customer's requirements, by default Kernel returns all available columns. In addition, these columns are not expected to change (order or names) as you continue to use the Kernel Flat file extract API.
@@ -11,7 +13,7 @@ The same flat file CSV extract can be downloaded from the Kernel UI at this page
 
 **System access:**
 
-- Kernel system API user email: [customer-api@gokernel.com](mailto:customer-api@gokernel.com)
+- Kernel system API user email example: [customer-api@gokernel.com](mailto:customer-api@gokernel.com)
 - Password: *TBD*
 
 Customer systems will call the authorization function with this user's credentials to securely authenticate to Kernel for access to customer's survey/insights data.
@@ -154,7 +156,7 @@ In the above example, to constrain the report by specific dates we specified sta
 **Notes:**
 
 - If this API endpoint is called by a user with access below Site Admin, then the output will be restricted to only the teams that they are a member of.
- Note: [customer-api@gokernel.com](mailto:customer-api@gokernel.com) user is a member of all teams.
+ Note: [customer-api@gokernel.com](mailto:customer-api@gokernel.com) user should be assigned as a member to all teams it needs to pull data for.
 - Some column names and values may vary depending on the customer's configuration. Some columns may be removed and additional columns of data may be added to the export upon request and Kernel engineering team's review.
 
 **Report Data Descriptions:**
