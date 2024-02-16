@@ -75,9 +75,13 @@ Response payload:
 - JSON serialization of AuthorizationObject that contains user id, authorization token and its expiration attribute (see below a sample Java representation of this object). The "authorization" field value of this JSON should be sent as a value of "Authorization" HTTP header called in all subsequent requests.
 
 class AuthorizationObject {
+
    String userId;
+   
    String authorization;
+   
    Boolean expired;
+   
 }
 
 Example request:
@@ -120,13 +124,21 @@ Response HTTP Status codes:
 Filters:
 
 class FilterObject {
+
    java.sql.Timestamp startDate; // earliest "Interaction Date"
+   
    java.sql.Timestamp endDate; // latest "Interaction Date"
+   
    java.util.Set\<String\> contactReputations; // contact recognition level
+   
    java.util.Set\<String\> contactRoles; // contact primary roles
+   
    java.util.Set\<String\> institutionTypes; // institution types
+   
    java.util.Set\<String\> provinces; // province codes
+   
    java.util.Set\<String\> countries; // country codes
+   
 }
 
 Example:
