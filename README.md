@@ -75,13 +75,9 @@ Response payload:
 - JSON serialization of AuthorizationObject that contains user id, authorization token and its expiration attribute (see below a sample Java representation of this object). The "authorization" field value of this JSON should be sent as a value of "Authorization" HTTP header called in all subsequent requests.
 
 class AuthorizationObject {
-
-String userId;
-
-String authorization;
-
-Boolean expired;
-
+   String userId;
+   String authorization;
+   Boolean expired;
 }
 
 Example request:
@@ -91,13 +87,9 @@ curl -X POST https://customer.gokernel.com/kernelAPI/v2/user/authorize --data 'e
 Example response:
 
 {
-
-"userId":"BD47BE08ECA511E1A8425404A6247829"
-
-"authorization":"fbf5eaf3-5683-49bd-b2c6-f256a994d7e9",
-
-"expired":false
-
+   "userId":"BD47BE08ECA511E1A8425404A6247829"
+   "authorization":"fbf5eaf3-5683-49bd-b2c6-f256a994d7e9",
+   "expired":false
 }
 
 Response HTTP Status codes:
@@ -112,10 +104,8 @@ Response HTTP Status codes:
 **POST storage/topicExportAsCSV?[short=true][&types=TYPE1[&types=TYPE2…]]**
 
 where:
-
-short is an optional parameter, when specified and true, the CVS report is produced in short form (fewer columns).
-
-types is one or more of the following types: **Insights** , **InitiativeResponses** , **Feedbacks**. If not specified the report will contain all types. When **Insights** type is specified the response contains initiative insights. When **InitiativeResponses** type is specified the response contains responses to initiative questions (survey results). When **Feedbacks** type is specified the response contains interactions that have neither insights nor responses. If types parameter is not specified the response contains all interactions that contain either insights or responses or both.
+- short is an optional parameter, when specified and true, the CVS report is produced in short form (fewer columns).
+- types is one or more of the following types: **Insights** , **InitiativeResponses** , **Feedbacks**. If not specified the report will contain all types. When **Insights** type is specified the response contains initiative insights. When **InitiativeResponses** type is specified the response contains responses to initiative questions (survey results). When **Feedbacks** type is specified the response contains interactions that have neither insights nor responses. If types parameter is not specified the response contains all interactions that contain either insights or responses or both.
 
 Request data contains filters and is expected as JSON serialization of the FilterObject containing common filters that will be applied when response data is retrieved from the database (see below a sample Java representation of this object). One or several filters can be included in the FilterObject. If no FilterObject is specified in the request, the response will contain all interactions.
 
@@ -130,21 +120,13 @@ Response HTTP Status codes:
 Filters:
 
 class FilterObject {
-
-java.sql.Timestamp startDate; // earliest "Interaction Date"
-
-java.sql.Timestamp endDate; // latest "Interaction Date"
-
-java.util.Set\<String\> contactReputations; // contact recognition level
-
-java.util.Set\<String\> contactRoles; // contact primary roles
-
-java.util.Set\<String\> institutionTypes; // institution types
-
-java.util.Set\<String\> provinces; // province codes
-
-java.util.Set\<String\> countries; // country codes
-
+   java.sql.Timestamp startDate; // earliest "Interaction Date"
+   java.sql.Timestamp endDate; // latest "Interaction Date"
+   java.util.Set\<String\> contactReputations; // contact recognition level
+   java.util.Set\<String\> contactRoles; // contact primary roles
+   java.util.Set\<String\> institutionTypes; // institution types
+   java.util.Set\<String\> provinces; // province codes
+   java.util.Set\<String\> countries; // country codes
 }
 
 Example:
